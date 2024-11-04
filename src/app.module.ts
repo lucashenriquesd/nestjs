@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SwaggerModule } from './swagger/swagger.module';
+import { DrizzleModule } from './drizzle/drizzle.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { SwaggerModule } from './swagger/swagger.module';
     }),
     AuthModule,
     SwaggerModule,
+    DrizzleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

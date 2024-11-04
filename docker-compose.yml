@@ -29,8 +29,10 @@ services:
     working_dir: /var/lib/postgresql/data
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
     networks:
       - nestjs-network
+    command: postgres -c 'hba_file=/etc/postgresql/pg_hba.conf'
 
 networks:
   nestjs-network:
