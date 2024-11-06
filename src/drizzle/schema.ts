@@ -25,6 +25,7 @@ const commonColumns = {
 export const usersTable = pgTable('users', {
   ...commonColumns,
   email: text().notNull().unique(),
+  password: text().notNull(),
   name: text(),
   birth_date: date(),
   gender: text({ enum: ['Male', 'Female', 'Other'] }),

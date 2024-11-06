@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"deleted_at" timestamp,
 	"active" boolean DEFAULT true NOT NULL,
 	"email" text NOT NULL,
+	"password" text NOT NULL,
 	"name" text,
 	"birth_date" date,
 	"gender" text,
