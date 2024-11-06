@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { SwaggerService } from '@/swagger/swagger.service';
 
@@ -10,6 +11,8 @@ async function bootstrap() {
   const swaggerService = app.get(SwaggerService);
 
   swaggerService.enableOpenApi(app);
+
+  app.useGlobalPipes(new ValidationPipe());
 
   const port = configService.get<number>('NODE_PORT') || 3000;
 
