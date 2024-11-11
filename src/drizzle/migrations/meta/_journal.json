@@ -15,6 +15,13 @@
       "when": 1731285404962,
       "tag": "0001_add_not_null_updatedat_users_table",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1731297615873,
+      "tag": "0002_edit_db_generated_uuidv1_to_app_uuidv7",
+      "breakpoints": true
     }
   ]
 }

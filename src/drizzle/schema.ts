@@ -6,7 +6,7 @@ import {
   timestamp,
   boolean,
 } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
+import { uuidv7 } from 'uuidv7';
 
 const timestamps = {
   created_at: timestamp().defaultNow().notNull(),
@@ -18,7 +18,7 @@ const timestamps = {
 
 const commonColumns = {
   id: uuid()
-    .default(sql`uuid_generate_v1()`)
+    .$default(() => uuidv7())
     .primaryKey(),
   ...timestamps,
   active: boolean().default(true).notNull(),
