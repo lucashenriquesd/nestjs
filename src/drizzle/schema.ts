@@ -10,7 +10,9 @@ import { sql } from 'drizzle-orm';
 
 const timestamps = {
   created_at: timestamp().defaultNow().notNull(),
-  updated_at: timestamp(),
+  updated_at: timestamp()
+    .notNull()
+    .$onUpdate(() => new Date()),
   deleted_at: timestamp(),
 };
 
