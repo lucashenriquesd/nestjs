@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InferInsertModel, InferSelectModel, eq, sql } from 'drizzle-orm';
+import { InferInsertModel, InferSelectModel, eq } from 'drizzle-orm';
 import { instanceToPlain } from 'class-transformer';
 import { usersTable } from '@/drizzle/schema';
 import { DrizzleService } from '@/drizzle/drizzle.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserResponseDto } from './dto/user-response.dto';
+import { FindOneUserDto } from './dto/find-one-user.dto';
 
 type NewUser = InferInsertModel<typeof usersTable>;
 type User = InferSelectModel<typeof usersTable>;
@@ -35,7 +37,8 @@ export class UserService {
       .set({
         name: data.name,
         birth_date: data.birth_date,
-        updated_at: sql`NOW()`,
+        gender: data.gender,
+        phone: data.phone,
       })
       .where(eq(usersTable.id, id));
     return data;
@@ -51,13 +54,13 @@ export class UserService {
     return users;
   }
 
-  async findOne(id: string) {
+  async findOne(params: FindOneUserDto): Promise<UserResponseDto> {
     const user = await this.drizzle.db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.id, id))
+      .where(eq(usersTable.id, params.id))
       .limit(1);
 
-    return user;
+    return user[0];
   }
 }
