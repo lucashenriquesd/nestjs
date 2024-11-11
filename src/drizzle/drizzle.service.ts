@@ -5,7 +5,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 
 @Injectable()
 export class DrizzleService implements OnModuleInit {
-  public db: ReturnType<typeof drizzle>;
+  public db!: ReturnType<typeof drizzle>;
 
   constructor(private readonly configService: ConfigService) {}
 

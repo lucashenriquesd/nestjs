@@ -13,11 +13,7 @@ export class UserController {
 
   @Post()
   async create(@Body() data: CreateUserDto): Promise<User[] | null> {
-    try {
-      return await this.userService.create(data);
-    } catch (error) {
-      //
-    }
+    return await this.userService.create(data);
   }
 
   @Get()
