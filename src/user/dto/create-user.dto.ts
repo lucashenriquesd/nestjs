@@ -5,30 +5,30 @@ import { Type } from 'class-transformer';
 export class CreateUserDto {
   @ApiProperty({ example: 'john@example.com' })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({ example: 'securePassword123' })
   @IsString()
-  password: string;
+  password!: string;
 
   @ApiProperty({ example: 'John Doe' })
   @IsString()
   @IsOptional()
-  name: string;
+  name?: string;
 
   @ApiProperty({ example: '1990-01-01' })
   @Type(() => Date)
   @IsDate()
   @IsOptional()
-  birth_date: Date;
+  birth_date?: Date;
 
   @ApiProperty({ example: 'Male', enum: ['Male', 'Female', 'Other'] })
   @IsString()
   @IsOptional()
-  gender: 'Male' | 'Female' | 'Other';
+  gender?: 'Male' | 'Female' | 'Other';
 
   @ApiProperty({ example: '+1234567890' })
   @IsString()
   @IsOptional()
-  phone: string;
+  phone?: string;
 }
