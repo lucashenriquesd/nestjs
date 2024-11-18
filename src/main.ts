@@ -12,7 +12,13 @@ async function bootstrap() {
 
   swaggerService.enableOpenApi(app);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   const port = configService.get<number>('NODE_PORT') || 3000;
 
