@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InferSelectModel } from 'drizzle-orm';
-import { usersTable } from '@/drizzle/schema';
+import { usersTable } from '@/modules/drizzle/schema';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';

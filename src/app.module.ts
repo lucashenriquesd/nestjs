@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { SwaggerModule } from './swagger/swagger.module';
-import { DrizzleModule } from './drizzle/drizzle.module';
-import { UserModule } from './user/user.module';
+import { AuthModule } from '@/modules/auth/auth.module';
+import { SwaggerModule } from '@/modules/swagger/swagger.module';
+import { DrizzleModule } from '@/modules/drizzle/drizzle.module';
+import { UserModule } from '@/modules/user/user.module';
 
 @Module({
   imports: [
@@ -17,7 +15,7 @@ import { UserModule } from './user/user.module';
     DrizzleModule,
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

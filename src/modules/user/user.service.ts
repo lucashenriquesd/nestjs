@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InferInsertModel, InferSelectModel, eq } from 'drizzle-orm';
 import { instanceToPlain } from 'class-transformer';
-import { usersTable } from '@/drizzle/schema';
-import { DrizzleService } from '@/drizzle/drizzle.service';
+import { usersTable } from '@/modules/drizzle/schema';
+import { DrizzleService } from '@/modules/drizzle/drizzle.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
