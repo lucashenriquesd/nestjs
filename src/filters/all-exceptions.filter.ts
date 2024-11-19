@@ -29,7 +29,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
           (exceptionResponse as any).message ||
           (exceptionResponse as any) ||
           'Error',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(),
         path: request.url,
       });
       return;
@@ -70,7 +70,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         error: 'Internal Server Error',
         message: 'Database error',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(),
         path: request.url,
       });
       return;
@@ -86,7 +86,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
       error: 'Internal Server Error',
       message: 'Unhandled exception',
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(),
       path: request.url,
     });
   }
