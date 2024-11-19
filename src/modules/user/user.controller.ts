@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { InferSelectModel } from 'drizzle-orm';
 import { ApiResponse } from '@nestjs/swagger';
-import { SwaggerErrorResponses } from '@/modules/swagger/decorators/swagger-error-responses.decorator';
+import { AppController } from '@/app.controller';
 import { usersTable } from '@/modules/drizzle/schema';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,11 +18,12 @@ import { UserResponseDto } from './dto/user-response.dto';
 type User = InferSelectModel<typeof usersTable>;
 
 @Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UserController extends AppController {
+  constructor(private readonly userService: UserService) {
+    super();
+  }
 
   @Post()
-  @SwaggerErrorResponses()
   async create(@Body() data: CreateUserDto): Promise<User[] | null> {
     return await this.userService.create(data);
   }

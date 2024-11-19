@@ -4,7 +4,7 @@ import { ApiDefaultResponse } from '@nestjs/swagger';
 export function SwaggerErrorResponses() {
   return applyDecorators(
     ApiDefaultResponse({
-      description: 'Error structure response for all errors.',
+      description: 'Default error structure response for all endpoints.',
       schema: {
         example: {
           statusCode: 500,
