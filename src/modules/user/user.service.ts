@@ -61,6 +61,6 @@ export class UserService {
       .where(eq(usersTable.id, params.id))
       .limit(1);
 
-    return user[0];
+    return user[0] || null;
   }
 }
