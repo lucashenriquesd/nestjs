@@ -6,10 +6,16 @@ interface ApiStandardResponseOptions {
   type: any;
   description?: string;
   status?: number;
+  message?: string;
 }
 
 export function ApiStandardResponse(options: ApiStandardResponseOptions) {
-  const { status = 200, description = 'Success', type } = options;
+  const {
+    status = 200,
+    description = 'Example description',
+    type,
+    message = 'Success',
+  } = options;
 
   return applyDecorators(
     ApiExtraModels(ApiResponseDto, type),
@@ -22,7 +28,7 @@ export function ApiStandardResponse(options: ApiStandardResponseOptions) {
           {
             properties: {
               statusCode: { type: 'number', example: status },
-              message: { type: 'string', example: description },
+              message: { type: 'string', example: message },
               data: { $ref: getSchemaPath(type) },
             },
           },

@@ -37,15 +37,15 @@ export class UserController extends AppController {
   @Get(':id')
   @ApiStandardResponse({
     status: 200,
-    description: 'Found',
+    description: 'Get user by id',
     type: UserResponseDto,
   })
-  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 404, description: 'User not found' })
   async findOne(@Param() params: FindOneUserDto): Promise<UserResponseDto> {
     const data = await this.userService.findOne(params);
 
     if (!data) {
-      throw new NotFoundException(`${params.id} not found`);
+      throw new NotFoundException(`User ${params.id} not found`);
     }
 
     return data;
