@@ -10,6 +10,7 @@ import { InferSelectModel } from 'drizzle-orm';
 import { ApiResponse } from '@nestjs/swagger';
 import { AppController } from '@/app.controller';
 import { usersTable } from '@/modules/drizzle/schema';
+import { ApiStandardResponse } from '@/modules/swagger/decorators/api-standard-response.decorator';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
@@ -34,7 +35,7 @@ export class UserController extends AppController {
   }
 
   @Get(':id')
-  @ApiResponse({
+  @ApiStandardResponse({
     status: 200,
     description: 'Found',
     type: UserResponseDto,
