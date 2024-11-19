@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { SwaggerErrorResponses } from '@/modules/swagger/decorators/error-responses.decorator';
+import { ApiErrorResponses } from '@/modules/swagger/decorators/error-responses.decorator';
 
-@SwaggerErrorResponses()
+@ApiErrorResponses()
 @Controller()
 export class AppController {}

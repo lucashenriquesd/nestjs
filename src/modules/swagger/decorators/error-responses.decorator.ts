@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiDefaultResponse } from '@nestjs/swagger';
 
-export function SwaggerErrorResponses() {
+export function ApiErrorResponses() {
   return applyDecorators(
     ApiDefaultResponse({
       description: 'Default error structure response for all endpoints.',

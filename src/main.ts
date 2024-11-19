@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { SwaggerService } from '@/modules/swagger/swagger.service';
 import { AllExceptionsFilter } from '@/filters/all-exceptions.filter';
+import { TransformResponseInterceptor } from '@/interceptors/transform-response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +23,8 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new AllExceptionsFilter());
+
+  app.useGlobalInterceptors(new TransformResponseInterceptor());
 
   const port = configService.get<number>('NODE_PORT') || 3000;
 
