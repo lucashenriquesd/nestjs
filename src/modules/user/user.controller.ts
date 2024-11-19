@@ -30,8 +30,15 @@ export class UserController extends AppController {
   }
 
   @Get()
-  async findAll(): Promise<User[]> {
-    return await this.userService.findAll();
+  @ApiStandardResponse({
+    status: 200,
+    description: 'List of users retrieved successfully',
+    type: [UserResponseDto],
+  })
+  async findAll(): Promise<UserResponseDto[]> {
+    const data = await this.userService.findAll();
+
+    return data;
   }
 
   @Get(':id')

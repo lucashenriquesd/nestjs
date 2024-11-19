@@ -17,8 +17,12 @@ export function ApiStandardResponse(options: ApiStandardResponseOptions) {
     message = 'Success',
   } = options;
 
+  // Determine if the type is an array
+  const isArray = Array.isArray(type);
+
+  // Register the model with ApiExtraModels
   return applyDecorators(
-    ApiExtraModels(ApiResponseDto, type),
+    ApiExtraModels(ApiResponseDto, ...(isArray ? [type[0]] : [type])),
     ApiResponse({
       status,
       description,
@@ -29,7 +33,12 @@ export function ApiStandardResponse(options: ApiStandardResponseOptions) {
             properties: {
               statusCode: { type: 'number', example: status },
               message: { type: 'string', example: message },
-              data: { $ref: getSchemaPath(type) },
+              data: isArray
+                ? {
+                    type: 'array',
+                    items: { $ref: getSchemaPath(type[0]) }, // Handle array of models
+                  }
+                : { $ref: getSchemaPath(type) }, // Handle single model
             },
           },
         ],
