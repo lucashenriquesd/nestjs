@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsOptional, IsDate } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsDate, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
+
+export enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+  Other = 'Other',
+}
 
 export class CreateUserDto {
   @ApiProperty({ example: 'john@example.com' })
@@ -22,10 +28,10 @@ export class CreateUserDto {
   @IsOptional()
   birthDate?: string;
 
-  @ApiProperty({ example: 'Male', enum: ['Male', 'Female', 'Other'] })
-  @IsString()
+  @ApiProperty({ example: 'Male', enum: Gender })
+  @IsEnum(Gender)
   @IsOptional()
-  gender?: 'Male' | 'Female' | 'Other';
+  gender?: Gender;
 
   @ApiProperty({ example: '+1234567890' })
   @IsString()
