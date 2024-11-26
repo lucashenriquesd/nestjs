@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InferSelectModel, eq } from 'drizzle-orm';
 import { usersTable } from '@/modules/drizzle/schema';
 import { DrizzleService } from '@/modules/drizzle/drizzle.service';
+import { AuthService } from '@/modules/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
@@ -10,12 +11,18 @@ type User = InferSelectModel<typeof usersTable>;
 
 @Injectable()
 export class UserService {
-  constructor(private readonly drizzle: DrizzleService) {}
+  constructor(
+    private readonly drizzle: DrizzleService,
+    private readonly authService: AuthService,
+  ) {}
 
   async create(dto: CreateUserDto) {
+    const hashedPassword = await this.authService.hashPassword(dto.password);
+    const newUser = { ...dto, password: hashedPassword };
+
     const user = await this.drizzle.db
       .insert(usersTable)
-      .values(dto)
+      .values(newUser)
       .returning();
 
     return user[0] || null;
