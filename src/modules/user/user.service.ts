@@ -14,11 +14,16 @@ export class UserService {
   constructor(private readonly drizzle: DrizzleService) {}
 
   async create(data: CreateUserDto) {
-    const userData = data as NewUser;
+    const { birthDate, ...userData } = data;
+
+    const newUser: NewUser = {
+      ...userData,
+      birthDate: birthDate ? birthDate.toISOString().split('T')[0] : undefined,
+    };
 
     const user = await this.drizzle.db
       .insert(usersTable)
-      .values(userData)
+      .values(newUser)
       .returning();
 
     return user;
