@@ -20,7 +20,7 @@ export class CreateUserDto {
   @Type(() => Date)
   @IsDate()
   @IsOptional()
-  birth_date?: Date;
+  birthDate?: Date;
 
   @ApiProperty({ example: 'Male', enum: ['Male', 'Female', 'Other'] })
   @IsString()

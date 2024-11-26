@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InferInsertModel, InferSelectModel, eq } from 'drizzle-orm';
-import { instanceToPlain } from 'class-transformer';
 import { usersTable } from '@/modules/drizzle/schema';
 import { DrizzleService } from '@/modules/drizzle/drizzle.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,13 +14,7 @@ export class UserService {
   constructor(private readonly drizzle: DrizzleService) {}
 
   async create(data: CreateUserDto) {
-    const userDataPlain = instanceToPlain(data) as NewUser;
-
-    const userData: NewUser = {
-      ...userDataPlain,
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
+    const userData = data as NewUser;
 
     const user = await this.drizzle.db
       .insert(usersTable)
@@ -36,7 +29,7 @@ export class UserService {
       .update(usersTable)
       .set({
         name: data.name,
-        birth_date: data.birth_date,
+        birthDate: data.birthDate,
         gender: data.gender,
         phone: data.phone,
       })

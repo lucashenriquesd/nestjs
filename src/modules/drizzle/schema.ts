@@ -9,11 +9,11 @@ import {
 import { uuidv7 } from 'uuidv7';
 
 const timestamps = {
-  created_at: timestamp().defaultNow().notNull(),
-  updated_at: timestamp()
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
     .notNull()
     .$onUpdate(() => new Date()),
-  deleted_at: timestamp(),
+  deletedAt: timestamp('deleted_at'),
 };
 
 const commonColumns = {
@@ -29,7 +29,7 @@ export const usersTable = pgTable('users', {
   email: text().notNull().unique(),
   password: text().notNull(),
   name: text(),
-  birth_date: date(),
+  birthDate: date('birth_date'),
   gender: text({ enum: ['Male', 'Female', 'Other'] }),
   phone: text(),
 });
