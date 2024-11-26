@@ -7,6 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
+import { plainToInstance } from 'class-transformer';
 import { AppController } from '@/app.controller';
 import { ApiStandardResponse } from '@/modules/swagger/decorators/standard-response.decorator';
 import { UserService } from './user.service';
@@ -29,7 +30,9 @@ export class UserController extends AppController {
   async create(@Body() dto: CreateUserDto): Promise<UserResponseDto | null> {
     const data = await this.userService.create(dto);
 
-    return data;
+    const userResponse = plainToInstance(UserResponseDto, data);
+
+    return userResponse;
   }
 
   @Get()
@@ -41,7 +44,9 @@ export class UserController extends AppController {
   async findAll(): Promise<UserResponseDto[]> {
     const data = await this.userService.findAll();
 
-    return data;
+    const userResponse = plainToInstance(UserResponseDto, data);
+
+    return userResponse;
   }
 
   @Get(':id')
@@ -51,13 +56,15 @@ export class UserController extends AppController {
     type: UserResponseDto,
   })
   @ApiResponse({ status: 404, description: 'User not found' })
-  async findOne(@Param() params: FindOneUserDto): Promise<UserResponseDto> {
-    const data = await this.userService.findOne(params);
+  async findOne(@Param() dto: FindOneUserDto): Promise<UserResponseDto> {
+    const data = await this.userService.findOne(dto);
 
     if (!data) {
-      throw new NotFoundException(`User ${params.id} not found`);
+      throw new NotFoundException(`User ${dto.id} not found`);
     }
 
-    return data;
+    const userResponse = plainToInstance(UserResponseDto, data);
+
+    return userResponse;
   }
 }
