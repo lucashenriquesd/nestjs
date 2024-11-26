@@ -13,8 +13,8 @@ type User = InferSelectModel<typeof usersTable>;
 export class UserService {
   constructor(private readonly drizzle: DrizzleService) {}
 
-  async create(data: CreateUserDto) {
-    const { birthDate, ...userData } = data;
+  async create(dto: CreateUserDto) {
+    const { birthDate, ...userData } = dto;
 
     const newUser: NewUser = {
       ...userData,
@@ -26,7 +26,7 @@ export class UserService {
       .values(newUser)
       .returning();
 
-    return user;
+    return user[0] || null;
   }
 
   async update(id: string, data: User) {
