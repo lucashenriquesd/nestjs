@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InferSelectModel, eq } from 'drizzle-orm';
 import { usersTable } from '@/modules/drizzle/schema';
 import { DrizzleService } from '@/modules/drizzle/drizzle.service';
@@ -13,6 +13,7 @@ type User = InferSelectModel<typeof usersTable>;
 export class UserService {
   constructor(
     private readonly drizzle: DrizzleService,
+    @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
   ) {}
 
@@ -56,6 +57,16 @@ export class UserService {
       .select()
       .from(usersTable)
       .where(eq(usersTable.id, params.id))
+      .limit(1);
+
+    return user[0] || null;
+  }
+
+  async findOneByEmail(email: string): Promise<User> {
+    const user = await this.drizzle.db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
       .limit(1);
 
     return user[0] || null;

@@ -8,6 +8,7 @@ export class SwaggerService {
       .setTitle('Nestjs')
       .setDescription('Nestjs project with batteries included')
       .setVersion('1.0')
+      .addBearerAuth()
       .build();
 
     const openApiDocument: OpenAPIObject = SwaggerModule.createDocument(
