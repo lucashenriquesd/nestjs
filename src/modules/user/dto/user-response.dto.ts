@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Exclude } from 'class-transformer';
 
+export enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+  Other = 'Other',
+}
+
+export type GenderOrNull = keyof typeof Gender | null;
+
 @Exclude() // Exclude all properties by default
 export class UserResponseDto {
   @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000' })
@@ -15,23 +23,22 @@ export class UserResponseDto {
   @Expose()
   email!: string;
 
-  @ApiProperty({ example: 'John Doe', required: false })
+  @ApiProperty({ example: 'John Doe' })
   @Expose()
   name?: string | null;
 
-  @ApiProperty({ example: '1990-01-01', required: false })
+  @ApiProperty({ example: '1990-01-01' })
   @Expose()
-  birth_date?: string | null;
+  birthDate?: string | null;
 
   @ApiProperty({
     example: 'Male',
-    enum: ['Male', 'Female', 'Other'],
-    required: false,
+    enum: Gender,
   })
   @Expose()
-  gender?: 'Male' | 'Female' | 'Other' | null;
+  gender?: GenderOrNull;
 
-  @ApiProperty({ example: '+1234567890', required: false })
+  @ApiProperty({ example: '+1234567890' })
   @Expose()
   phone?: string | null;
 }

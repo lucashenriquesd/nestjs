@@ -6,12 +6,15 @@ import {
   Get,
   Body,
 } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { ApiStandardResponse } from '@/modules/swagger/decorators/standard-response.decorator';
 import { LoginDto } from './dto/login.dto';
 import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
+import { UserResponseDto } from '@/modules/user/dto/user-response.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -25,8 +28,17 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Body() dto: SignupDto) {
-    return this.authService.signup(dto);
+  @ApiStandardResponse({
+    status: 201,
+    description: 'User created',
+    type: UserResponseDto,
+  })
+  async signup(@Body() dto: SignupDto): Promise<UserResponseDto | null> {
+    const data = await this.authService.signup(dto);
+
+    const userResponse = plainToInstance(UserResponseDto, data);
+
+    return userResponse;
   }
 
   @ApiBearerAuth()

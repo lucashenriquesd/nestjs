@@ -3,7 +3,6 @@ import {
   Body,
   Controller,
   Get,
-  Post,
   Put,
   Param,
   NotFoundException,
@@ -14,7 +13,6 @@ import { plainToInstance } from 'class-transformer';
 import { AppController } from '@/app.controller';
 import { ApiStandardResponse } from '@/modules/swagger/decorators/standard-response.decorator';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { CompleteProfileDto } from './dto/complete-profile.dto';
@@ -24,20 +22,6 @@ import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 export class UserController extends AppController {
   constructor(private readonly userService: UserService) {
     super();
-  }
-
-  @Post()
-  @ApiStandardResponse({
-    status: 201,
-    description: 'User created',
-    type: UserResponseDto,
-  })
-  async create(@Body() dto: CreateUserDto): Promise<UserResponseDto | null> {
-    const data = await this.userService.create(dto);
-
-    const userResponse = plainToInstance(UserResponseDto, data);
-
-    return userResponse;
   }
 
   @Put('complete-profile')
