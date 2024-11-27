@@ -6,6 +6,7 @@ import { AuthService } from '@/modules/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
+import { CompleteProfileDto } from './dto/complete-profile.dto';
 
 type User = InferSelectModel<typeof usersTable>;
 
@@ -29,6 +30,21 @@ export class UserService {
     return user[0] || null;
   }
 
+  async completeProfile(userId: string, dto: CompleteProfileDto) {
+    const user = await this.drizzle.db
+      .update(usersTable)
+      .set({
+        name: dto.name,
+        birthDate: dto.birthDate,
+        gender: dto.gender,
+        phone: dto.phone,
+      })
+      .where(eq(usersTable.id, userId))
+      .returning();
+
+    return user[0] || null;
+  }
+
   async update(id: string, data: User) {
     await this.drizzle.db
       .update(usersTable)
@@ -39,6 +55,7 @@ export class UserService {
         phone: data.phone,
       })
       .where(eq(usersTable.id, id));
+
     return data;
   }
 

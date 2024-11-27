@@ -1,12 +1,15 @@
 import {
+  Request,
   Body,
   Controller,
   Get,
   Post,
+  Put,
   Param,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { AppController } from '@/app.controller';
 import { ApiStandardResponse } from '@/modules/swagger/decorators/standard-response.decorator';
@@ -14,6 +17,8 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
+import { CompleteProfileDto } from './dto/complete-profile.dto';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController extends AppController {
@@ -29,6 +34,22 @@ export class UserController extends AppController {
   })
   async create(@Body() dto: CreateUserDto): Promise<UserResponseDto | null> {
     const data = await this.userService.create(dto);
+
+    const userResponse = plainToInstance(UserResponseDto, data);
+
+    return userResponse;
+  }
+
+  @Put('complete-profile')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  async completeProfile(
+    @Request() req: any,
+    @Body() dto: CompleteProfileDto,
+  ): Promise<UserResponseDto | null> {
+    const userId = req.user.userId;
+
+    const data = await this.userService.completeProfile(userId, dto);
 
     const userResponse = plainToInstance(UserResponseDto, data);
 
