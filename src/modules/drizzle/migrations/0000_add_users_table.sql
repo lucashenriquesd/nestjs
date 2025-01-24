@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "users" (
-	"id" uuid PRIMARY KEY DEFAULT uuid_generate_v1() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp,
 	"deleted_at" timestamp,
