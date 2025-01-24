@@ -24,7 +24,7 @@ const commonColumns = {
   active: boolean().default(true).notNull(),
 };
 
-export const usersTable = pgTable('users', {
+export const userTable = pgTable('user', {
   ...commonColumns,
   email: text().notNull().unique(),
   password: text().notNull(),

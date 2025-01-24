@@ -6,14 +6,14 @@
       "idx": 0,
       "version": "7",
       "when": 1730869172842,
-      "tag": "0000_add_users_table",
+      "tag": "0000_add_user_table",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
       "when": 1731285404962,
-      "tag": "0001_add_not_null_updatedat_users_table",
+      "tag": "0001_add_not_null_updatedat_user_table",
       "breakpoints": true
     },
     {
