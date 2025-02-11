@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '@/modules/user/user.service';
-import { usersTable } from '@/modules/drizzle/schema';
+import { userTable } from '@/modules/drizzle/schema';
 import { DrizzleService } from '@/modules/drizzle/drizzle.service';
 import { SignupDto } from './dto/signup.dto';
 
@@ -60,7 +60,7 @@ export class AuthService {
     const newUser = { ...dto, password: hashedPassword };
 
     const user = await this.drizzle.db
-      .insert(usersTable)
+      .insert(userTable)
       .values(newUser)
       .returning();
 

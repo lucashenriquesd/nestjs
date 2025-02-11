@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InferSelectModel, eq } from 'drizzle-orm';
-import { usersTable } from '@/modules/drizzle/schema';
+import { userTable } from '@/modules/drizzle/schema';
 import { DrizzleService } from '@/modules/drizzle/drizzle.service';
 import { UserResponseDto } from './dto/user-response.dto';
 import { FindOneUserDto } from './dto/find-one-user.dto';
 import { CompleteProfileDto } from './dto/complete-profile.dto';
 
-type User = InferSelectModel<typeof usersTable>;
+type User = InferSelectModel<typeof userTable>;
 
 @Injectable()
 export class UserService {
@@ -14,14 +14,14 @@ export class UserService {
 
   async completeProfile(userId: string, dto: CompleteProfileDto) {
     const user = await this.drizzle.db
-      .update(usersTable)
+      .update(userTable)
       .set({
         name: dto.name,
         birthDate: dto.birthDate,
         gender: dto.gender,
         phone: dto.phone,
       })
-      .where(eq(usersTable.id, userId))
+      .where(eq(userTable.id, userId))
       .returning();
 
     return user[0] || null;
@@ -29,14 +29,14 @@ export class UserService {
 
   async update(id: string, data: User) {
     await this.drizzle.db
-      .update(usersTable)
+      .update(userTable)
       .set({
         name: data.name,
         birthDate: data.birthDate,
         gender: data.gender,
         phone: data.phone,
       })
-      .where(eq(usersTable.id, id));
+      .where(eq(userTable.id, id));
 
     return data;
   }
@@ -46,7 +46,7 @@ export class UserService {
   }
 
   async findAll() {
-    const users = await this.drizzle.db.select().from(usersTable);
+    const users = await this.drizzle.db.select().from(userTable);
 
     return users;
   }
@@ -54,8 +54,8 @@ export class UserService {
   async findOne(params: FindOneUserDto): Promise<UserResponseDto> {
     const user = await this.drizzle.db
       .select()
-      .from(usersTable)
-      .where(eq(usersTable.id, params.id))
+      .from(userTable)
+      .where(eq(userTable.id, params.id))
       .limit(1);
 
     return user[0] || null;
@@ -64,8 +64,8 @@ export class UserService {
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.drizzle.db
       .select()
-      .from(usersTable)
-      .where(eq(usersTable.email, email))
+      .from(userTable)
+      .where(eq(userTable.email, email))
       .limit(1);
 
     return user[0] || null;
