@@ -1,4 +1,3 @@
-version: '3.8'
 services:
 
   node:
@@ -34,7 +33,25 @@ services:
       - nestjs-network
     command: postgres -c 'hba_file=/etc/postgresql/pg_hba.conf'
 
+  ollama:
+    container_name: nestjs-ollama
+    build:
+      context: ./
+      dockerfile: local.ollama.Dockerfile
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - nestjs-network
+
 networks:
   nestjs-network:
     driver: bridge
     name: nestjs-network
+
+volumes:
+  ollama:

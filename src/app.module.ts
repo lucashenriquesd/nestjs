@@ -4,6 +4,7 @@ import { AuthModule } from '@/modules/auth/auth.module';
 import { SwaggerModule } from '@/modules/swagger/swagger.module';
 import { DrizzleModule } from '@/modules/drizzle/drizzle.module';
 import { UserModule } from '@/modules/user/user.module';
+import { OllamaModule } from '@/modules/ollama/ollama.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from '@/modules/user/user.module';
     SwaggerModule,
     DrizzleModule,
     UserModule,
+    OllamaModule,
   ],
   controllers: [],
   providers: [],
