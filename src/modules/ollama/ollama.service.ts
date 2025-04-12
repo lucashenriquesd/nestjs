@@ -1,6 +1,6 @@
 import { Injectable, MessageEvent } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { Observable, firstValueFrom  } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { Readable } from 'stream';
 
 @Injectable()
@@ -9,18 +9,18 @@ export class OllamaService {
 
   async onModuleInit() {
     try {
-      const res = await firstValueFrom(
-        this.httpService.post('http://ollama:11434/api/generate', {
-          model: 'gemma3:1b',
-          prompt: 'ping',
-          stream: false
-        })
+      const resTags = await firstValueFrom(
+        this.httpService.get('http://ollama:11434/api/tags')
       );
 
-      if (res.status === 200 && res.data?.response) {
-        console.log('Ollama is reachable and responded.');
+      if (resTags.status === 200 && resTags.data?.models?.length) {
+        console.log('Ollama is reachable. Installed models:');
+
+        resTags.data.models.forEach((model: any) => {
+          console.log(`• ${model.name}`);
+        });
       } else {
-        console.warn('Ollama responded but unexpectedly:', res.status, res.data);
+        console.warn('Ollama is up, but no models found.');
       }
     } catch (err: any) {
       console.error('Failed to connect to Ollama:', err.message ?? err);
